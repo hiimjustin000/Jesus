@@ -97,10 +97,11 @@ class $modify(MyGJBaseGameLayer, GJBaseGameLayer) {
 		time_counter += dt;
 	}
 
-	void collisionCheckObjects(PlayerObject* player, gd::vector<GameObject*>* objs, int v0, float v1) {
+	void collisionCheckObjects(PlayerObject* player, gd::vector<GameObject*>* objs, int count, float dt) {
 		if (modEnabled() && (playLayerEnabled() || levelEditorLayerEnabled())) {
 			float sensitivity = Mod::get()->getSettingValue<double>("sensitivity");
-			for (auto obj : *objs) {
+			for (int i = 0; i < count; i++) {
+				auto obj = sectionObjects->at(i);
 				if (obj == nullptr) continue;
 				if (obj->m_objectType != GameObjectType::Hazard && obj->m_objectType != GameObjectType::AnimatedHazard) continue;
 				if (getBoolSetting("skipInvisibleObjects") && obj->m_isHide || obj->getOpacity() == 0) continue;
